@@ -5,12 +5,11 @@ from os import getenv
 
 @dataclass
 class DatabaseConfig:
-    database_system: str = 'sqlite'
-    driver: str = 'aiosqlite'
-    engine_url: str = 'sqlite+aiosqlite:///db.sqlite3'
+    engine: str = getenv('DB_ENGINE')
+    echo: bool = getenv('DB_ECHO', True)
 
     def build_connection_str(self) -> str:
-        return self.engine_url
+        return self.engine
 
 
 @dataclass

@@ -14,7 +14,6 @@ start_router = Router(name='start')
 @start_router.message(CommandStart())
 @start_router.message(F.text.lower() == 'начать')
 async def start_handler(message: types.Message, state: FSMContext):
-    # todo: решить проблему с секурити формат строк
     await message.answer(hi.format(name=hbold(message.from_user.full_name)), parse_mode='HTML')
     await state.clear()
     return await message.answer(help_text, parse_mode='HTML', reply_markup=MENU_BOARD)

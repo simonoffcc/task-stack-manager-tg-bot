@@ -8,9 +8,11 @@ from redis.asyncio.client import Redis
 
 from src.bot.dispatcher import get_dispatcher, get_redis_storage
 from src.configuration import conf
+from src.db.models import async_main
 
 
 async def start_bot():
+    await async_main()
     bot = Bot(token=conf.bot.token)
     storage = get_redis_storage(
         redis=Redis(
