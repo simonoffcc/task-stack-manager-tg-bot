@@ -1,2 +1,2 @@
-from .database_mw import DatabaseMiddleware
+"""Пакет мидлварей."""
 

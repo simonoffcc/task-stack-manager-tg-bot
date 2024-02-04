@@ -8,7 +8,7 @@ from src.bot.structures.lexicon import hi, help_text
 from src.bot.structures.keyboards import MENU_BOARD
 
 start_router = Router(name='start')
-start_router.message.filter(RegisterFilter())
+# start_router.message.filter(RegisterFilter())
 
 
 @start_router.message(CommandStart())

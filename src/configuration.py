@@ -1,42 +1,21 @@
-"""This file represents configurations from files and environment."""
 import logging
 from dataclasses import dataclass
 from os import getenv
 
-from sqlalchemy.engine import URL
-
 
 @dataclass
 class DatabaseConfig:
-    """Database connection variables."""
-
-    name: str | None = getenv('POSTGRES_DATABASE', 'template1')
-    user: str | None = getenv('POSTGRES_USER', 'postgres')
-    passwd: str | None = getenv('POSTGRES_PASSWORD',)
-    port: int = int(getenv('POSTGRES_PORT', 5432))
-    host: str = getenv('POSTGRES_HOST', 'localhost')
-
-    driver: str = 'asyncpg'
-    database_system: str = 'postgresql'
+    database_system: str = 'sqlite'
+    driver: str = 'aiosqlite'
+    engine_url: str = 'sqlite+aiosqlite:///db.sqlite3'
 
     def build_connection_str(self) -> str:
-        """This function build a connection string."""
-        return URL.create(
-            drivername=f'{self.database_system}+{self.driver}',
-            username=self.user,
-            database=self.name,
-            password=self.passwd,
-            port=self.port,
-            host=self.host,
-        ).render_as_string(hide_password=False)
+        return self.engine_url
 
 
 @dataclass
 class RedisConfig:
-    """Redis connection variables."""
-
     db: int = int(getenv('REDIS_DATABASE', 1))
-    """ Redis Database ID """
     host: str = getenv('REDIS_HOST', 'redis')
     port: int = int(getenv('REDIS_PORT', 6379))
     passwd: str | None = getenv('REDIS_PASSWORD')
@@ -47,15 +26,11 @@ class RedisConfig:
 
 @dataclass
 class BotConfig:
-    """Bot configuration."""
-
     token: str = getenv('BOT_TOKEN')
 
 
 @dataclass
 class Configuration:
-    """All in one configuration's class."""
-
     debug = bool(getenv('DEBUG', 1))
     logging_level = int(getenv('LOGGING_LEVEL', logging.INFO))
 
