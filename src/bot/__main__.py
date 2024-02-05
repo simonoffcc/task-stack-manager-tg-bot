@@ -40,7 +40,4 @@ async def start_bot():
 if __name__ == '__main__':
     locale.setlocale(locale.LC_ALL, "")
     logging.basicConfig(level=conf.logging_level, stream=sys.stdout)
-    try:
-        asyncio.run(start_bot())
-    except KeyboardInterrupt:
-        print('exit')
+    asyncio.run(start_bot())
