@@ -20,41 +20,27 @@ class User(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     tg_id = mapped_column(BigInteger)
 
-    basket_rel: Mapped[List['Basket']] = relationship(back_populates='user_rel')
-
-
-class TaskType(Base):
-    __tablename__ = 'categories'
-
-    id: Mapped[int] = mapped_column(primary_key=True)
-    name: Mapped[str] = mapped_column(String(50))
-
-    item_rel: Mapped[List['Task']] = relationship(back_populates='category_rel')
+    stack_rel: Mapped[List['Stack']] = relationship(back_populates='user_rel')
 
 
 class Task(Base):
-    __tablename__ = 'items'
+    __tablename__ = 'tasks'
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    name: Mapped[str] = mapped_column(String(50))
-    description: Mapped[str] = mapped_column(String(200))
-    photo: Mapped[str] = mapped_column(String(200))
-    price: Mapped[int] = mapped_column()
-    category: Mapped[int] = mapped_column(ForeignKey('categories.id'))
+    text: Mapped[str] = mapped_column(String(200))
 
-    category_rel: Mapped['TaskType'] = relationship(back_populates='item_rel')
-    basket_rel: Mapped[List['Basket']] = relationship(back_populates='item_rel')
+    stack_rel: Mapped[List['Stack']] = relationship(back_populates='task_rel')
 
 
-class Basket(Base):
-    __tablename__ = 'basket'
+class Stack(Base):
+    __tablename__ = 'stack'
 
     id: Mapped[int] = mapped_column(primary_key=True)
     user: Mapped[int] = mapped_column(ForeignKey('users.id'))
-    item: Mapped[int] = mapped_column(ForeignKey('items.id'))
+    task: Mapped[int] = mapped_column(ForeignKey('tasks.id'))
 
-    user_rel: Mapped['User'] = relationship(back_populates='basket_rel')
-    item_rel: Mapped['Task'] = relationship(back_populates='basket_rel')
+    user_rel: Mapped['User'] = relationship(back_populates='stack_rel')
+    task_rel: Mapped['Task'] = relationship(back_populates='stack_rel')
 
 
 async def async_main():
