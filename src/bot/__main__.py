@@ -7,12 +7,14 @@ from aiogram import Bot
 from redis.asyncio.client import Redis
 
 from src.bot.dispatcher import get_dispatcher, get_redis_storage
+from src.bot.structures.data_structure import TransferData
 from src.configuration import conf
-from src.db.models import async_main
+from src.simple_db.models import async_main
+from src.db.database import create_async_engine
 
 
 async def start_bot():
-    await async_main()
+    # await async_main()
     bot = Bot(token=conf.bot.token)
     storage = get_redis_storage(
         redis=Redis(
@@ -28,6 +30,10 @@ async def start_bot():
     await dp.start_polling(
         bot,
         allowed_updates=dp.resolve_used_update_types(),
+        **TransferData(
+            engine=create_async_engine(url=conf.db.build_connection_str()),
+        ),
+
     )
 
 

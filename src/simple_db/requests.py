@@ -1,5 +1,5 @@
-from src.db.models import User, Task, Stack
-from src.db.models import async_session
+from src.simple_db.models import User, Task, Stack
+from src.simple_db.models import async_session
 
 from sqlalchemy import select, update, delete
 
