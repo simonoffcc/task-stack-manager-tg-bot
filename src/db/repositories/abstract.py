@@ -1,6 +1,6 @@
 """Repository file."""
 import abc
-from typing import Generic, TypeVar
+from typing import Generic, TypeVar, Type
 from collections.abc import Sequence
 
 from sqlalchemy import delete, select
@@ -14,10 +14,10 @@ AbstractModel = TypeVar('AbstractModel')
 class Repository(Generic[AbstractModel]):
     """Repository abstract class."""
 
-    type_model: type[Base]
+    type_model: Type[Base]
     session: AsyncSession
 
-    def __init__(self, type_model: type[Base], session: AsyncSession):
+    def __init__(self, type_model: Type[Base], session: AsyncSession):
         """Initialize abstract repository class.
 
         :param type_model: Which model will be used for operations

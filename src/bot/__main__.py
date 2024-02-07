@@ -33,7 +33,6 @@ async def start_bot():
         **TransferData(
             engine=create_async_engine(url=conf.db.build_connection_str()),
         ),
-
     )
 
 
