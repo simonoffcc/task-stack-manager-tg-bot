@@ -1,9 +1,9 @@
-import pathlib
+from pathlib import Path
 
 from pydantic import SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-ENV_FILE_LOCATION = f"{pathlib.Path(__file__).resolve().parent}/.env"
+ENV_FILE_LOCATION = Path(".env").resolve()
 
 
 class Settings(BaseSettings):

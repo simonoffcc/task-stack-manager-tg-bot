@@ -11,10 +11,9 @@ from sqlalchemy.ext.asyncio import (
 
 from bot.middlewares import DBSessionMiddleware
 from bot.handlers import setup_message_routers
-from bot.callbacks import setup_callback_routers
 
 from db import Base
-from config_reader import config
+from configuration import config
 
 
 async def on_startup(_engine: AsyncEngine) -> None:
@@ -40,9 +39,7 @@ async def main() -> None:
     dp.shutdown.register(on_shutdown)
 
     message_routers = setup_message_routers()
-    callback_routers = setup_callback_routers()
     dp.include_router(message_routers)
-    dp.include_router(callback_routers)
 
     await bot.delete_webhook(True)
     await dp.start_polling(bot, allowed_updates=dp.resolve_used_update_types())
